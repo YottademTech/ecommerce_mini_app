@@ -91,14 +91,7 @@ const MainApp: React.FC = () => {
     return (
         <div className="font-apple min-h-screen bg-white text-black dark:bg-black dark:text-white flex flex-col items-center pb-32">
             <div className="w-full max-w-md mx-auto pb-8 md:pb-12 bg-white dark:bg-black text-black dark:text-white">
-                <div className="flex items-center justify-between py-4 px-4">
-                    <button className="text-blue-400 font-bold text-base">Close</button>
-                    <div className="text-center">
-                        <div className="font-bold text-2xl">Durger King</div>
-                        <div className="text-sm text-zinc-400 dark:text-zinc-300">mini app</div>
-                    </div>
-                    <div style={{ width: 48 }}></div>
-                </div>
+
                 <Routes>
                     <Route
                         path="/"
