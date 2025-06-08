@@ -16,7 +16,7 @@ const OrderView: React.FC<Props> = ({ order, onAdd, onRemove, onClear, onCheckou
 
     return (
         <motion.div
-            className="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-zinc-800 p-4 z-20"
+            className="fixed bottom-0 left-0 right-0 bg-[#f3f3f3] dark:bg-zinc-800 border-t border-zinc-800 p-4 z-20"
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             exit={{ y: 100 }}

@@ -12,4 +12,23 @@
 
 body {
   font-family: 'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  @apply bg-white text-black;
+}
+
+@layer utilities {
+  .shimmer {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, #f3f3f3 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer-move 2.5s infinite linear;
+    opacity: 0.5;
+  }
+  .dark .shimmer {
+    background: linear-gradient(90deg, transparent 0%, #27272a 50%, transparent 100%);
+  }
+  @keyframes shimmer-move {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
 } 

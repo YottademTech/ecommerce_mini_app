@@ -6,6 +6,7 @@ import CheckoutPage from './components/CheckoutPage';
 import MenuGrid from './components/MenuGrid';
 import OrderReview from './components/OrderReview';
 import PaymentForm, { PaymentInfo } from './components/PaymentForm';
+import Shimmer from './components/Shimmer';
 import ShippingForm, { ShippingInfo } from './components/ShippingForm';
 import { MENU_ITEMS } from './data';
 import { OrderItem } from './types';
@@ -20,6 +21,7 @@ const MainApp: React.FC = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const navigate = useNavigate();
+    const [viewOrderShimmer, setViewOrderShimmer] = useState(false);
 
     const handleAdd = (id: string) => {
         setOrder(prev => {
@@ -87,13 +89,13 @@ const MainApp: React.FC = () => {
     };
 
     return (
-        <div className="font-apple min-h-screen bg-black text-white flex flex-col items-center pb-32">
-            <div className="w-full max-w-md mx-auto">
+        <div className="font-apple min-h-screen bg-white text-black dark:bg-black dark:text-white flex flex-col items-center pb-32">
+            <div className="w-full max-w-md mx-auto pb-8 md:pb-12 bg-white dark:bg-black text-black dark:text-white">
                 <div className="flex items-center justify-between py-4 px-4">
-                    <button className="text-blue-400 font-bold">Close</button>
+                    <button className="text-blue-400 font-bold text-base">Close</button>
                     <div className="text-center">
-                        <div className="font-bold text-xl">Durger King</div>
-                        <div className="text-xs text-zinc-400">mini app</div>
+                        <div className="font-bold text-2xl">Durger King</div>
+                        <div className="text-sm text-zinc-400 dark:text-zinc-300">mini app</div>
                     </div>
                     <div style={{ width: 48 }}></div>
                 </div>
@@ -110,13 +112,20 @@ const MainApp: React.FC = () => {
                                     onDecrement={handleDecrement}
                                 />
                                 {order.length > 0 && (
-                                    <div className="fixed bottom-4 left-0 right-0 flex justify-center z-30">
-                                        <button
-                                            className="w-11/12 max-w-md bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-2xl text-lg shadow-xl"
-                                            onClick={handleViewOrder}
-                                        >
-                                            VIEW ORDER
-                                        </button>
+                                    <div className="fixed bottom-0 left-0 right-0 flex justify-center z-30 pb-0">
+                                        <div className="w-full bg-[#f3f3f3] dark:bg-zinc-800 shadow-lg flex items-center justify-center p-2">
+                                            <button
+                                                className="w-11/12 max-w-md bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl text-lg shadow-xl relative overflow-hidden"
+                                                onClick={handleViewOrder}
+                                                onMouseEnter={() => setViewOrderShimmer(true)}
+                                                onMouseLeave={() => setViewOrderShimmer(false)}
+                                                onMouseDown={() => setViewOrderShimmer(true)}
+                                                onMouseUp={() => setViewOrderShimmer(false)}
+                                            >
+                                                <Shimmer active={viewOrderShimmer} />
+                                                VIEW ORDER
+                                            </button>
+                                        </div>
                                     </div>
                                 )}
                             </>
@@ -131,7 +140,6 @@ const MainApp: React.FC = () => {
                                 onDecrement={handleDecrement}
                                 onRemove={handleRemove}
                                 onClear={handleClear}
-                                onClose={() => navigate(-1)}
                                 onProceed={handleProceedToCheckout}
                             />
                         }
@@ -141,7 +149,6 @@ const MainApp: React.FC = () => {
                         element={
                             <CheckoutPage
                                 order={order}
-                                onClose={() => navigate(-1)}
                                 onConfirm={handleConfirmOrder}
                                 onEditSection={handleEditSection}
                                 comment={checkoutComment}
@@ -160,7 +167,6 @@ const MainApp: React.FC = () => {
                             <ShippingForm
                                 initial={shippingInfo || undefined}
                                 onSave={handleSaveShipping}
-                                onClose={() => navigate(-1)}
                             />
                         }
                     />
@@ -170,19 +176,18 @@ const MainApp: React.FC = () => {
                             <PaymentForm
                                 initial={paymentInfo || undefined}
                                 onSave={handleSavePayment}
-                                onClose={() => navigate(-1)}
                             />
                         }
                     />
                 </Routes>
             </div>
             {loading && (
-                <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-40">
+                <div className="fixed inset-0 bg-white bg-opacity-40 flex items-center justify-center z-40">
                     <div className="bg-zinc-800 text-white px-6 py-4 rounded-xl shadow-lg text-lg animate-pulse">Sending order...</div>
                 </div>
             )}
             {feedback && (
-                <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                <div className="fixed inset-0 bg-white bg-opacity-40 flex items-center justify-center z-50">
                     <div className="bg-zinc-900 text-white px-8 py-6 rounded-2xl shadow-2xl text-xl font-bold">
                         {feedback}
                     </div>
